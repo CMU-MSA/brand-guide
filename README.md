@@ -25,7 +25,9 @@ If you only ever remember those three things, the repo will keep working.
 brand-guide/
 ├── cmu-msa-brand-guide.md                # THE BRAND GUIDE — this is the only file you edit
 ├── cmu-msa-brand-guide.pdf               # generated automatically — DO NOT edit by hand
-├── tokens.json                           # machine-readable design tokens — canonical values
+├── tokens/
+│   ├── tokens.json                       # machine-readable design tokens — canonical values
+│   └── tokens.schema.json                # JSON schema to validate tokens.json structure
 ├── assets/
 │   └── logo/
 │       └── cmu-msa-logo.jpg              # interim logo asset
@@ -39,20 +41,21 @@ brand-guide/
 ```
 
 **Edit freely:** `cmu-msa-brand-guide.md`.
-**Edit if you mean to change design values:** `tokens.json` (the single machine-readable source of truth).
+**Edit if you mean to change design values:** `tokens/tokens.json` (the single machine-readable source of truth).
 **Edit only if you mean to change how the PDF looks or builds:** `build/style.css`, `build/build_pdf.py`, `.github/workflows/build-pdf.yml`.
 **Never edit by hand:** `cmu-msa-brand-guide.pdf` (it's regenerated).
 
 ### Using the design tokens
 
-The `tokens.json` file at the root of the repository is the machine-readable layer of the brand guide — inspired by how companies like Apple maintain visual consistency across entirely different tech stacks.
+The `tokens/` directory contains the machine-readable layer of the brand guide — inspired by how companies like Apple maintain visual consistency across entirely different tech stacks.
 
-- **`tokens.json`** contains every design value (colors, fonts, spacing, radii, motion, dark mode) as structured JSON. Any build tool, design plugin (e.g., Figma Tokens Studio), or platform-specific constants file can consume it directly.
+- **`tokens/tokens.json`** contains every design value (colors, fonts, spacing, radii, motion, dark mode) as structured JSON. Any build tool, design plugin (e.g., Figma Tokens Studio), or platform-specific constants file can consume it directly.
+- **`tokens/tokens.schema.json`** defines the exact structure and validation rules for the token data. Modern code editors read this schema automatically to provide live linting, error validation, and auto-complete inside `tokens.json`.
 
 Downstream web projects can compile these tokens to CSS custom properties or configuration variables during their build step. For example, a simple Node.js script can convert the JSON to CSS custom properties:
 
 ```javascript
-const tokens = require('./tokens.json');
+const tokens = require('./tokens/tokens.json');
 const fs = require('fs');
 
 let css = `@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@500;600;700&family=Lora:wght@400;500&family=Amiri:wght@400;700&family=Cairo:wght@600;700&display=swap');\n\n`;
@@ -70,7 +73,7 @@ css += `}\n`;
 fs.writeFileSync('brand.css', css);
 ```
 
-For Tailwind CSS, you can directly import `tokens.json` and map its values into your `tailwind.config.js` `theme.extend`. See Section 6 of the brand guide for the full cross-platform implementation guide, including iOS, Android, and Flutter mappings.
+For Tailwind CSS, you can directly import `tokens/tokens.json` and map its values into your `tailwind.config.js` `theme.extend`. See Section 6 of the brand guide for the full cross-platform implementation guide, including iOS, Android, and Flutter mappings.
 
 ---
 

@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CMU MSA Design Tokens Schema",
+  "type": "object",
+  "required": [
+    "$version",
+    "color",
+    "color-dark",
+    "typography",
+    "spacing",
+    "radius",
+    "motion",
+    "elevation",
+    "focus",
+    "border"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "$version": { "type": "string" },
+    "$description": { "type": "string" },
+    "color": {
+      "type": "object",
+      "properties": {
+        "$description": { "type": "string" }
+      },
+      "additionalProperties": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+    },
+    "color-dark": {
+      "type": "object",
+      "properties": {
+        "$description": { "type": "string" }
+      },
+      "additionalProperties": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+    },
+    "typography": {
+      "type": "object",
+      "required": [
+        "family-display",
+        "family-heading",
+        "family-body",
+        "scale-display",
+        "scale-h1",
+        "scale-h2",
+        "scale-h3",
+        "scale-body",
+        "scale-lead",
+        "scale-small"
+      ],
+      "properties": {
+        "$description": { "type": "string" },
+        "family-display": { "type": "string" },
+        "family-heading": { "type": "string" },
+        "family-body": { "type": "string" },
+        "family-arabic": { "type": "string" },
+        "family-arabic-quran": { "type": "string" },
+        "family-arabic-heading": { "type": "string" },
+        "fallback-display": { "type": "string" },
+        "fallback-heading": { "type": "string" },
+        "fallback-body": { "type": "string" },
+        "fallback-arabic": { "type": "string" },
+        "fallback-arabic-heading": { "type": "string" },
+        "scale-display": { "type": "string" },
+        "scale-h1": { "type": "string" },
+        "scale-h2": { "type": "string" },
+        "scale-h3": { "type": "string" },
+        "scale-body": { "type": "string" },
+        "scale-lead": { "type": "string" },
+        "scale-small": { "type": "string" },
+        "weight-display": { "type": "integer" },
+        "weight-heading-bold": { "type": "integer" },
+        "weight-heading-semi": { "type": "integer" },
+        "weight-heading-medium": { "type": "integer" },
+        "weight-body": { "type": "integer" },
+        "weight-body-medium": { "type": "integer" },
+        "line-height-display": { "type": "number" },
+        "line-height-heading": { "type": "number" },
+        "line-height-body": { "type": "number" },
+        "tracking-display": { "type": "string" },
+        "tracking-heading": { "type": "string" },
+        "tracking-body": { "type": "string" },
+        "measure-max": { "type": "string" }
+      }
+    },
+    "spacing": {
+      "type": "object",
+      "required": ["unit", "scale"],
+      "properties": {
+        "$description": { "type": "string" },
+        "unit": { "type": "string" },
+        "scale": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": { "type": "string" }
+    },
+    "radius": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "motion": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "elevation": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "focus": {
+      "type": "object",
+      "required": ["ring-width", "ring-color", "ring-offset"],
+      "properties": {
+        "ring-width": { "type": "string" },
+        "ring-color": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+        "ring-offset": { "type": "string" }
+      }
+    },
+    "border": {
+      "type": "object",
+      "required": ["width-default", "width-accent", "color-default"],
+      "properties": {
+        "width-default": { "type": "string" },
+        "width-accent": { "type": "string" },
+        "color-default": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+      }
+    }
+  }
+}

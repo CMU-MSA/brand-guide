@@ -10,7 +10,7 @@
 
 > **Maintenance note.** Carnegie Mellon University has strict rules about how student clubs can use the CMU name and logos (see Section 2). Because the university updates these rules from time to time, the MSA board must check with the CMU SLICE office and the university brand team at the start of every school year to make sure this guide is still up to date with university policy.
 
-> **Scope.** This brand guide is **web-first** and also governs the organization's **digital and social presence** — website, social media, Open Graph share cards, and digital flyers. A machine-readable token file (`tokens.json`) ships alongside this document at the root of the repository so that every implementation consumes the exact same values (see Section 6). The guide does **not** yet cover physical print or merchandise production (CMYK/Pantone separations, garment specs, etc.). Those were intentionally deferred and will be added when the organization is ready; their absence is a scoping decision, not an oversight.
+> **Scope.** This brand guide is **web-first** and also governs the organization's **digital and social presence** — website, social media, Open Graph share cards, and digital flyers. A machine-readable token file (`tokens/tokens.json`) ships alongside this document so that every implementation consumes the exact same values (see Section 6). The guide does **not** yet cover physical print or merchandise production (CMYK/Pantone separations, garment specs, etc.). Those were intentionally deferred and will be added when the organization is ready; their absence is a scoping decision, not an oversight.
 
 ---
 
@@ -252,7 +252,7 @@ Three expressive, screen-legible families chosen to give the MSA a distinct, war
 
 These are the canonical interface values every implementation must use. They are framework-neutral. Color hex codes and the type scale are defined in Section 3 — this subsection adds the non-color interface tokens.
 
-> **Machine-readable tokens.** All values in this section (and throughout Sections 3–4) are also published as `tokens.json` at the root of this repository — a single JSON file that any framework, platform, or build tool can consume directly. See **Section 6** for how to use these across platforms.
+> **Machine-readable tokens.** All values in this section (and throughout Sections 3–4) are also published as `tokens/tokens.json` — a single JSON file that any framework, platform, or build tool can consume directly. See **Section 6** for how to use these across platforms.
 
 | Token | Value | Use |
 | ----- | ----- | --- |
@@ -354,16 +354,16 @@ The brand guide is the human-readable reference. The token files are the machine
 
 The implementation layer is formed by:
 
-- **`tokens.json`** — A single, structured JSON file at the root of the repository containing every design value (color, typography, spacing, radius, motion, elevation, focus, border). Any build system, design tool, or platform can parse this file to extract exact values.
+- **`tokens/tokens.json`** — A single, structured JSON file in the `tokens/` directory containing every design value (color, typography, spacing, radius, motion, elevation, focus, border). Any build system, design tool, or platform can parse this file to extract exact values.
 
 **The hierarchy of authority:**
-1. **Values** → `tokens.json` governs. If the JSON file and this document disagree on a hex code, size, or weight, the JSON wins.
+1. **Values** → `tokens/tokens.json` governs. If the JSON file and this document disagree on a hex code, size, or weight, the JSON wins.
 2. **Usage rules** → This document governs. The JSON says *what* the values are; this document says *when and how* to use them (e.g., "Gold is never body text").
 
 **Consuming tokens in a web project:**
-Web projects should compile `tokens.json` to their target format (e.g., CSS custom properties or Sass variables) during their build/dev step. For example, a compilation script can generate CSS variables under a `:root` selector namespaced with `--msa-` to prevent styling collisions.
+Web projects should compile `tokens/tokens.json` to their target format (e.g., CSS custom properties or Sass variables) during their build/dev step. For example, a compilation script can generate CSS variables under a `:root` selector namespaced with `--msa-` to prevent styling collisions.
 
-For Tailwind CSS, you can directly import `tokens.json` and map its values into `tailwind.config.js` `theme.extend`.
+For Tailwind CSS, you can directly import `tokens/tokens.json` and map its values into `tailwind.config.js` `theme.extend`.
 
 ### 6.2 Dark Mode
 
@@ -434,7 +434,7 @@ The brand's accessibility requirements (Section 3.2 contrast, Section 4.2 focus)
 
 Every MSA digital product — website, app, or tool — must pass this checklist before release. The board may designate a reviewer, but any contributor can run the check.
 
-- [ ] **Token sourcing.** All color, spacing, radius, and motion values come from `tokens.json` — no hardcoded hex values, no ad-hoc spacing.
+- [ ] **Token sourcing.** All color, spacing, radius, and motion values come from `tokens/tokens.json` — no hardcoded hex values, no ad-hoc spacing.
 - [ ] **Font rendering.** All three Latin families (DM Serif Display, Plus Jakarta Sans, Lora) load and render correctly. Arabic text uses Amiri (body) or Cairo (headings).
 - [ ] **Color contrast.** Every text element passes WCAG AA (4.5:1 normal, 3:1 large) per the matrix in Section 3.2.
 - [ ] **Dark mode.** If the platform supports dark mode, the implementation uses the dark token set from Section 6.2. Light/dark follow the user's OS setting by default.
@@ -449,5 +449,5 @@ Every MSA digital product — website, app, or tool — must pass this checklist
 
 ---
 
-*This document is the single source of truth for usage rules; `tokens.json` is the single source of truth for values. Where any flyer, page, app, or component disagrees with them, these sources govern and the artifact is corrected.*
+*This document is the single source of truth for usage rules; `tokens/tokens.json` is the single source of truth for values. Where any flyer, page, app, or component disagrees with them, these sources govern and the artifact is corrected.*
 
