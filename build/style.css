@@ -2,16 +2,26 @@
    Brand fonts load from Google Fonts at build time; system Noto fonts are the
    fallback so the build still succeeds offline (Arabic + emoji always render). */
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&family=Source+Serif+Pro:wght@400;500;600&family=Amiri:wght@400;700&family=Cairo:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@500;600;700&family=Lora:wght@400;500&family=Amiri:wght@400;700&family=Cairo:wght@600;700&display=swap');
 
 :root {
-  --cmu-red: #C41230;
-  --msa-teal: #1F4C4C;
-  --msa-teal-50: #E7F0F0;
-  --msa-gold: #FDB515;
-  --iron-gray: #6D6E71;
-  --steel-gray: #E0E0E0;
-  --ink: #1A1A1A;
+  /* --- Core palette --- */
+  --cmu-red:          #C41230;  /* Carnegie Red — CTA / brand accent */
+  --cmu-red-700:      #9E0F26;  /* Hover/active on red buttons */
+  --cmu-red-50:       #FBE9EC;  /* Ghost-button hover on light */
+  --msa-teal:         #1F4C4C;  /* Hornbostel Teal — secondary UI */
+  --msa-teal-700:     #163838;  /* Hover/active on teal buttons */
+  --msa-teal-50:      #E7F0F0;  /* Ghost teal button hover */
+  --msa-gold:         #FDB515;  /* Gold Thread — sparing emphasis */
+  --msa-gold-700:     #D9970A;  /* Hover on gold elements */
+  --iron-gray:        #6D6E71;  /* Muted text */
+  --steel-gray:       #E0E0E0;  /* Dividers / subtle fills */
+  --ink:              #1A1A1A;  /* Near-black body text */
+  /* --- New expanded colors --- */
+  --midnight-teal:    #0D2828;  /* Deep dark surface — hero, nav, footer */
+  --midnight-800:     #1A3F3F;  /* Hover on midnight teal elements */
+  --warm-cream:       #FAF7F2;  /* Default page background — replaces pure white */
+  --cream-50:         #F3EFE8;  /* Active/pressed on cream surfaces */
 }
 
 /* ---- Page geometry + running footer ---- */
@@ -20,13 +30,13 @@
   margin: 20mm 17mm 22mm 17mm;
   @bottom-center {
     content: "CMU MSA Brand Guide";
-    font-family: "Open Sans", sans-serif;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
     font-size: 7.5pt;
     color: var(--iron-gray);
   }
   @bottom-right {
     content: counter(page) " / " counter(pages);
-    font-family: "Open Sans", sans-serif;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
     font-size: 7.5pt;
     color: var(--iron-gray);
   }
@@ -38,7 +48,7 @@ body {
   /* Latin-only preference list. Arabic and emoji are substituted automatically
      by Pango per-glyph, so they must NOT appear here (an Arabic face early in
      the stack steals Latin runs and drops Western digits). */
-  font-family: "Source Serif Pro", Georgia, "Times New Roman", serif;
+  font-family: "Lora", Georgia, "Times New Roman", serif;
   color: var(--ink);
   line-height: 1.55;
   -weasy-hyphens: auto;
@@ -48,16 +58,22 @@ strong { font-weight: 600; }
 a { color: var(--msa-teal); text-decoration: none; word-break: break-word; }
 
 /* ---- Headings ---- */
-h1, h2, h3, h4 {
-  font-family: "Open Sans", sans-serif;
+h1 {
+  font-family: "DM Serif Display", Georgia, serif;
+  line-height: 1.1;
+  page-break-after: avoid;
+}
+h2, h3, h4 {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   line-height: 1.2;
   page-break-after: avoid;
 }
 /* The document title (first H1) acts as a cover line */
+/* DM Serif Display is a Regular-only face; weight is set by the typeface itself */
 h1 {
   font-size: 26pt;
-  font-weight: 700;
-  color: var(--cmu-red);
+  font-weight: 400;
+  color: var(--midnight-teal);
   margin: 0 0 0.2em;
   padding-bottom: 0.25em;
   border-bottom: 4px solid var(--cmu-red);
@@ -66,7 +82,7 @@ h1 {
 h2 {
   font-size: 16pt;
   font-weight: 700;
-  color: var(--msa-teal);
+  color: var(--midnight-teal);
   margin: 1.4em 0 0.5em;
   padding-bottom: 0.18em;
   border-bottom: 1.5px solid var(--steel-gray);
@@ -75,7 +91,7 @@ h2 {
 /* Don't force a page break before the very first H2 (Table of Contents) */
 nav.toc + h2 { page-break-before: avoid; }
 h3 { font-size: 12.5pt; font-weight: 600; color: var(--msa-teal); margin: 1.1em 0 0.35em; }
-h4 { font-size: 11pt; font-weight: 600; color: var(--ink); margin: 0.9em 0 0.3em; }
+h4 { font-size: 11pt; font-weight: 600; color: var(--midnight-teal); margin: 0.9em 0 0.3em; }
 
 /* ---- Lists ---- */
 ul, ol { margin: 0 0 0.6em; padding-left: 1.25em; }
@@ -103,9 +119,9 @@ table {
 thead { display: table-header-group; }
 tr, td, th { break-inside: avoid; }
 th {
-  background: var(--msa-teal);
+  background: var(--midnight-teal);
   color: #fff;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   font-weight: 600;
   text-align: left;
   padding: 5px 6px;
@@ -160,10 +176,10 @@ nav.toc {
 nav.toc::before {
   content: "Contents";
   display: block;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   font-weight: 700;
   font-size: 13pt;
-  color: var(--msa-teal);
+  color: var(--midnight-teal);
   margin-bottom: 0.4em;
 }
 nav.toc ul { list-style: none; padding-left: 0; }

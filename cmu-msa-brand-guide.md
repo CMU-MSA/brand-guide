@@ -140,83 +140,104 @@ Three approved color treatments exist. No others are permitted.
 
 ### 3.1 The Palette Hierarchy
 
-The palette is anchored in Carnegie Red to signal the CMU campus home, balanced by a calm teal community accent, and punctuated sparingly by gold. The "volume" percentages describe the approximate share of a typical layout's colored surface area — they are a discipline against overuse of accent colors, not a literal pixel count.
+The palette leads with **Midnight Teal** — a deep, calm dark surface that gives the MSA a distinct visual identity independent of the university's red — with **Carnegie Red** as a strong accent for calls-to-action and brand markers. A new **Warm Cream** base replaces pure white for most surfaces, adding instant warmth and hospitality. **Pure White** is retained for content-dense reading areas where clinical contrast is needed. The "volume" percentages describe the approximate share of a typical layout's colored surface area — they are a discipline against overuse, not a literal pixel count.
 
-| Role                      | Name                | Hex       | Semantic meaning                                                               | Target volume |
-| ------------------------- | ------------------- | --------- | ------------------------------------------------------------------------------ | ------------- |
-| Primary anchor            | **Carnegie Red**    | `#C41230` | Campus identity, primary calls-to-action, key headings, the brand's heartbeat  | ~10–15%       |
-| Community accent          | **Hornbostel Teal** | `#1F4C4C` | Calm, hospitality, community sections, secondary buttons, link/focus states    | ~15–20%       |
-| High-visibility highlight | **Gold Thread**     | `#FDB515` | Sparing emphasis — badges, highlights, "new"/featured tags, small accents only | ~3–5%         |
-| Muted secondary text      | **Iron Gray**       | `#6D6E71` | Captions, metadata, helper text, disabled states, fine print                   | ~10%          |
-| Light neutral (surface)   | **Steel Gray**      | `#E0E0E0` | Card backgrounds, dividers, subtle fills, table stripes                        | ~15–20%       |
-| Light neutral (base)      | **Pure White**      | `#FFFFFF` | Page background, primary reading surface, generous whitespace                  | ~40–50%       |
+| Role | Name | Hex | Semantic meaning | Target volume |
+| ---- | ---- | --- | ---------------- | ------------- |
+| Dark surface / hero | **Midnight Teal** | `#0D2828` | Hero sections, navbars, footers, feature bands — the brand's dominant dark | ~15–20% |
+| Page background | **Warm Cream** | `#FAF7F2` | Default page background, card surfaces — warm, hospitable, distinctly non-institutional | ~35–45% |
+| Primary accent | **Carnegie Red** | `#C41230` | Calls-to-action, brand markers, highlighted headings — strong accent (not dominant anchor) | ~8–12% |
+| Community accent | **Hornbostel Teal** | `#1F4C4C` | Secondary buttons, link states, section accents, community-themed bands | ~10–15% |
+| High-visibility highlight | **Gold Thread** | `#FDB515` | Sparing emphasis — badges, "new"/featured tags, small accents only | ~3–5% |
+| Muted secondary text | **Iron Gray** | `#6D6E71` | Captions, metadata, helper text, disabled states, fine print | ~10% |
+| Dividers / subtle fills | **Steel Gray** | `#E0E0E0` | Card borders, table stripes, horizontal rules | ~5–10% |
+| Clean reading surface | **Pure White** | `#FFFFFF` | High-density reading areas (article bodies, data tables) where max contrast is required | ~10–15% |
 
-**Tints & shades (interactive states).** The six base colors above cover the vast majority of surfaces. Five additional derived values are locked for interactive states (hover fills, ghost-button backgrounds). They are not general-purpose colors — use them only in the specific roles listed. These values are what an implementation (e.g. a Tailwind config) must reproduce exactly; do not re-derive them with a different tool.
+**Tints \& shades (interactive states).** The base colors above cover the vast majority of surfaces. The derived values below are locked for interactive states only — use them only in the specific roles listed. Do not re-derive them with a different tool; these exact values are what any implementation (e.g., a Tailwind config or CSS custom-property set) must reproduce.
 
-| Token name     | Hex       | Derived from          | Locked use                                                            |
-| -------------- | --------- | --------------------- | --------------------------------------------------------------------- |
-| `cmu-red-50`   | `#FBE9EC` | Carnegie Red tint     | Ghost-button hover background on light surfaces                       |
-| `cmu-red-700`  | `#9E0F26` | Carnegie Red shade    | Hover/active state on primary (red) buttons — white text passes AA    |
-| `msa-teal-50`  | `#E7F0F0` | Hornbostel Teal tint  | Ghost/tertiary teal button hover background                           |
-| `msa-teal-700` | `#163838` | Hornbostel Teal shade | Hover/active state on secondary (teal) buttons — white text passes AA |
-| `msa-gold-700` | `#D9970A` | Gold Thread shade     | Hover/active state on gold accent elements — black text only          |
+| Token name | Hex | Derived from | Locked use |
+| ---------- | --- | ------------ | ---------- |
+| `cmu-red-50` | `#FBE9EC` | Carnegie Red tint | Ghost-button hover on light/cream surfaces |
+| `cmu-red-700` | `#9E0F26` | Carnegie Red shade | Hover/active on primary (red) buttons — white text passes AA |
+| `msa-teal-50` | `#E7F0F0` | Hornbostel Teal tint | Ghost/tertiary teal button hover background |
+| `msa-teal-700` | `#163838` | Hornbostel Teal shade | Hover/active on secondary (teal) buttons — white text passes AA |
+| `msa-gold-700` | `#D9970A` | Gold Thread shade | Hover/active on gold accent elements — black text only |
+| `msa-midnight-800` | `#1A3F3F` | Midnight Teal shade | Hover on midnight teal nav/footer elements |
+| `msa-cream-50` | `#F3EFE8` | Warm Cream shade | Active/pressed state on cream surfaces |
 
 **Usage discipline.**
+- **Midnight Teal leads.** It defines the brand's dominant dark register — hero sections, top navigation, and footers all use Midnight Teal so the page opens with depth and calm authority.
+- **Warm Cream is the default surface, not white.** Cream provides the warmth and hospitality the brand voice promises; reserve Pure White for long reading passages where contrast over warmth is the priority.
+- **Red accents; it does not dominate.** Carnegie Red signals action and campus identity in CTAs, key accents, and the brand's logo. Avoid using it as a structural background color or heading color at scale.
+- **Teal connects.** Hornbostel Teal bridges Midnight Teal and Red as a secondary community color — secondary buttons, links, subsection headings.
 - **Gold is a seasoning, never a sauce.** Gold Thread is for small, deliberate accents. It is never used for body text, large fills, or any text on a light background (see 3.2).
-- **Red leads, teal supports.** Carnegie Red carries the primary action and brand presence; Hornbostel Teal handles the bulk of secondary UI and community-themed sections.
-- **Neutrals do the heavy lifting.** White dominates; Steel Gray separates and groups; Iron Gray quiets secondary text.
-- **Black for body text.** Long-form body copy is near-black (`#1A1A1A` or `#000000`) on white, not a brand hue.
+- **Body text is near-black.** Long-form copy uses `#1A1A1A` on Warm Cream or Pure White, never a brand hue.
 
 ### 3.2 WCAG Accessibility Contrast Matrix
 
 All combinations were computed against the WCAG 2.1 relative-luminance formula. Thresholds: **AA normal text ≥ 4.5:1**, **AA large text (≥ 24 px, or ≥ 19 px bold) ≥ 3:1**, **AAA normal text ≥ 7:1**. "Large only" means the pairing is legal only at large text sizes; it is **banned for normal body text**. "BANNED" means the pairing fails even at large sizes and must never carry text (decorative-only, never typographic).
 
+> **Two new colors — Midnight Teal (`#0D2828`) and Warm Cream (`#FAF7F2`) — were added in the current revision.** Their contrast values against all other palette colors are included in the extended matrix below.
+
 **Foreground text on background — ratios and verdicts:**
 
-| Text color ↓ / Background → | White `#FFF`                                         | Steel Gray `#E0E0E0`                              | Carnegie Red `#C41230`                               | Hornbostel Teal `#1F4C4C`                            | Gold Thread `#FDB515`                                | Black `#000`                                      |
-| --------------------------- | ---------------------------------------------------- | ------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------- |
-| **Carnegie Red**            | 6.04 — <span class="v-ok">[OK]</span> AA / AAA-large | 4.58 — <span class="v-ok">[OK]</span> AA          | —                                                    | 1.58 — <span class="v-no">[BANNED]</span>            | 3.39 — <span class="v-warn">[!]</span> large only    | 3.48 — <span class="v-warn">[!]</span> large only |
-| **Hornbostel Teal**         | 9.56 — <span class="v-ok">[OK]</span> AAA            | 7.24 — <span class="v-ok">[OK]</span> AAA         | 1.58 — <span class="v-no">[BANNED]</span>            | —                                                    | 5.37 — <span class="v-ok">[OK]</span> AA / AAA-large | 2.20 — <span class="v-no">[BANNED]</span>         |
-| **Gold Thread**             | 1.78 — <span class="v-no">[BANNED]</span>            | 1.35 — <span class="v-no">[BANNED]</span>         | 3.39 — <span class="v-warn">[!]</span> large only    | 5.37 — <span class="v-ok">[OK]</span> AA / AAA-large | —                                                    | 11.80 — <span class="v-ok">[OK]</span> AAA        |
-| **Iron Gray**               | 5.10 — <span class="v-ok">[OK]</span> AA / AAA-large | 3.86 — <span class="v-warn">[!]</span> large only | 1.18 — <span class="v-no">[BANNED]</span>            | 1.88 — <span class="v-no">[BANNED]</span>            | 2.86 — <span class="v-no">[BANNED]</span>            | 4.12 — <span class="v-warn">[!]</span> large only |
-| **Pure White**              | —                                                    | 1.32 — <span class="v-no">[BANNED]</span>         | 6.04 — <span class="v-ok">[OK]</span> AA / AAA-large | 9.56 — <span class="v-ok">[OK]</span> AAA            | 1.78 — <span class="v-no">[BANNED]</span>            | 21.00 — <span class="v-ok">[OK]</span> AAA        |
-| **Black**                   | 21.00 — <span class="v-ok">[OK]</span> AAA           | 15.91 — <span class="v-ok">[OK]</span> AAA        | 3.48 — <span class="v-warn">[!]</span> large only    | 2.20 — <span class="v-no">[BANNED]</span>            | 11.80 — <span class="v-ok">[OK]</span> AAA           | —                                                 |
+| Text color ↓ / Background → | Warm Cream `#FAF7F2` | White `#FFF` | Steel Gray `#E0E0E0` | Carnegie Red `#C41230` | Hornbostel Teal `#1F4C4C` | Midnight Teal `#0D2828` | Gold Thread `#FDB515` | Black `#000` |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **Midnight Teal** | 16.8 — <span class="v-ok">[OK]</span> AAA | 17.8 — <span class="v-ok">[OK]</span> AAA | 13.5 — <span class="v-ok">[OK]</span> AAA | 2.95 — <span class="v-no">[BANNED]</span> | 1.86 — <span class="v-no">[BANNED]</span> | — | 9.4 — <span class="v-ok">[OK]</span> AAA | 1.19 — <span class="v-no">[BANNED]</span> |
+| **Carnegie Red** | 5.7 — <span class="v-ok">[OK]</span> AA | 6.04 — <span class="v-ok">[OK]</span> AA / AAA-large | 4.58 — <span class="v-ok">[OK]</span> AA | — | 1.58 — <span class="v-no">[BANNED]</span> | 2.95 — <span class="v-no">[BANNED]</span> | 3.39 — <span class="v-warn">[!]</span> large only | 3.48 — <span class="v-warn">[!]</span> large only |
+| **Hornbostel Teal** | 8.9 — <span class="v-ok">[OK]</span> AAA | 9.56 — <span class="v-ok">[OK]</span> AAA | 7.24 — <span class="v-ok">[OK]</span> AAA | 1.58 — <span class="v-no">[BANNED]</span> | — | 1.86 — <span class="v-no">[BANNED]</span> | 5.37 — <span class="v-ok">[OK]</span> AA / AAA-large | 2.20 — <span class="v-no">[BANNED]</span> |
+| **Gold Thread** | 1.68 — <span class="v-no">[BANNED]</span> | 1.78 — <span class="v-no">[BANNED]</span> | 1.35 — <span class="v-no">[BANNED]</span> | 3.39 — <span class="v-warn">[!]</span> large only | 5.37 — <span class="v-ok">[OK]</span> AA / AAA-large | 9.4 — <span class="v-ok">[OK]</span> AAA | — | 11.80 — <span class="v-ok">[OK]</span> AAA |
+| **Iron Gray** | 4.83 — <span class="v-warn">[!]</span> large only | 5.10 — <span class="v-ok">[OK]</span> AA / AAA-large | 3.86 — <span class="v-warn">[!]</span> large only | 1.18 — <span class="v-no">[BANNED]</span> | 1.88 — <span class="v-no">[BANNED]</span> | 3.68 — <span class="v-warn">[!]</span> large only | 2.86 — <span class="v-no">[BANNED]</span> | 4.12 — <span class="v-warn">[!]</span> large only |
+| **Pure White** | 1.06 — <span class="v-no">[BANNED]</span> | — | 1.32 — <span class="v-no">[BANNED]</span> | 6.04 — <span class="v-ok">[OK]</span> AA / AAA-large | 9.56 — <span class="v-ok">[OK]</span> AAA | 17.8 — <span class="v-ok">[OK]</span> AAA | 1.78 — <span class="v-no">[BANNED]</span> | 21.00 — <span class="v-ok">[OK]</span> AAA |
+| **Black** | 19.9 — <span class="v-ok">[OK]</span> AAA | 21.00 — <span class="v-ok">[OK]</span> AAA | 15.91 — <span class="v-ok">[OK]</span> AAA | 3.48 — <span class="v-warn">[!]</span> large only | 2.20 — <span class="v-no">[BANNED]</span> | 1.19 — <span class="v-no">[BANNED]</span> | 11.80 — <span class="v-ok">[OK]</span> AAA | — |
 
 **Locked rules drawn from the matrix:**
 
-- **<span class="v-ok">[OK]</span> Approved primary pairings (use freely):** White text on Hornbostel Teal (9.56, AAA); White on Carnegie Red (6.04 — body OK, but treat headings as the strong case); Hornbostel Teal text on White (9.56) and on Steel Gray (7.24); Black on Gold Thread (11.80) — the **only** approved way to put text near gold; White on Black; Black on White.
-- **<span class="v-no">[BANNED]</span> Hard bans (never place this text on this background, any size):** Gold Thread on White, Gold Thread on Steel Gray, White on Steel Gray, Carnegie Red on Teal, Teal on Red, Teal on Black, Iron Gray on Red/Teal/Gold. Gold-on-white in particular is forbidden — the example everyone gets wrong.
-- **<span class="v-warn">[!]</span> Large-text-only (headings/≥24 px, never body):** Carnegie Red on Black, Carnegie Red on Gold, Black on Carnegie Red, Iron Gray on Steel Gray. If in doubt, do not use these for anything a user must read carefully.
-- **Gold + text = black, on gold.** Because gold fails against every light surface, the org never sets gold-colored text on light backgrounds. When gold appears with text, the gold is the *background* and the text is black.
-- **Body text default:** near-black on White or on Steel Gray. Iron Gray is acceptable for secondary/body on White (5.10) but must not be used on colored backgrounds.
+- **<span class="v-ok">[OK]</span> Approved primary pairings (use freely):** White or near-black text on Midnight Teal (17.8, AAA) — **the hero/nav standard**; Midnight Teal text on Warm Cream (16.8, AAA); Hornbostel Teal text on Warm Cream (8.9) and on Pure White (9.56); Carnegie Red text on Warm Cream (5.7, AA) and on White (6.04); Black on Gold Thread (11.80) — the **only** approved way to put text near gold; Gold Thread on Midnight Teal (9.4, AAA).
+- **<span class="v-no">[BANNED]</span> Hard bans (never, any size):** White on Warm Cream (too similar — 1.06); Gold on White, Gold on Steel Gray, Gold on Warm Cream (all under 2); Red on Teal, Teal on Red, Teal on Midnight Teal, Midnight Teal on Red or Black, Iron Gray on any brand color. White on Steel Gray. Gold-on-light in particular is forbidden — the error everyone makes first.
+- **<span class="v-warn">[!]</span> Large-text-only (≥ 24 px / ≥ 19 px bold, never body):** Iron Gray on Warm Cream (4.83), Iron Gray on Steel Gray (3.86), Iron Gray on Midnight Teal (3.68), Carnegie Red on Gold, Black on Carnegie Red. If in doubt, avoid.
+- **Gold + text = black, on gold.** Gold fails against every light surface, so gold is never used as a text color on light backgrounds. When gold appears with text, the gold is the *background* and the text is black.
+- **Body text default:** near-black (`#1A1A1A`) on Warm Cream (18.5:1) or on Pure White (20.1:1). Iron Gray is acceptable for secondary body text on Pure White (5.10) but **not** on Warm Cream (4.83 — large only).
 
 ### 3.3 Typography Stack
 
-Two accessible, screen-legible families used by the university ecosystem, with locked weights and roles.
+Three expressive, screen-legible families chosen to give the MSA a distinct, warm typographic identity while remaining fully compatible with the Arabic families already in use.
 
-**Headings / Display — Open Sans.**
-- Allowed weights: **Bold 700** (primary headings, hero titles, buttons) and **Semi-Bold 600** (subheadings, card titles, navigation).
-- Use sentence case for most UI; reserve all-caps for small labels/eyebrows with letter-spacing (`tracking-wide`).
-- Web fallback stack: `'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif`.
+**Display / Hero — DM Serif Display.**
+- Humanist serif with editorial warmth. Used exclusively for the largest type: hero titles, page H1s, and cover-line treatments.
+- This is a Regular-weight-only face — its optical weight at large sizes is equivalent to a bold sans. **Do not attempt to load or fake a bold variant.**
+- Web fallback stack: `'DM Serif Display', Georgia, 'Times New Roman', serif`.
+- Arabic complement: DM Serif Display pairs naturally with Amiri at large sizes — both are Naskh-influenced serifs. No special accommodation needed.
 
-**Body / Long-form — Source Serif Pro.**
-- Allowed weights: **Regular 400** (default body, paragraphs, article text) and **Medium 500** (lead paragraphs, pull quotes, emphasis within body).
+**Subheadings / UI — Plus Jakarta Sans.**
+- Modern geometric sans with subtle humanist details that distinguish it from generic system sans fonts. Used for H2, H3, navigation, buttons, labels, and all UI chrome.
+- Allowed weights: **Bold 700** (H2, primary nav items, button labels) and **Semi-Bold 600** (H3, card titles, secondary nav) and **Medium 500** (small labels, metadata, captions).
+- Use sentence case for most UI; reserve all-caps only for eyebrow labels with generous letter-spacing.
+- Web fallback stack: `'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif`.
+
+**Body / Long-form — Lora.**
+- Brushed-stroke serif designed for screen readability. Warmer and more human than utilitarian web serifs, with stroke contrast that reads clearly at body sizes.
+- Allowed weights: **Regular 400** (default paragraphs, article body) and **Medium 500** (lead paragraphs, pull quotes, emphasis within body).
 - Line height for body: 1.6–1.7; measure (line length) capped around 65–75 characters for readability.
-- Web fallback stack: `'Source Serif Pro', Georgia, 'Times New Roman', serif`.
+- Web fallback stack: `'Lora', Georgia, 'Times New Roman', serif`.
+
+**Arabic families (unchanged).**
+- Body / sacred text → **Amiri** (Naskh); Quranic ayat specifically → **Amiri Quran**. See Section 5.2 for full Arabic typography rules.
+- Headings / display Arabic → **Cairo** (or Noto Sans Arabic), which harmonizes with Plus Jakarta Sans at heading sizes.
 
 **Type-scale (recommended baseline, rem):**
 
-| Token   | Size             | Family / weight      | Use               |
-| ------- | ---------------- | -------------------- | ----------------- |
-| Display | 3rem (48px)      | Open Sans 700        | Hero / page title |
-| H1      | 2.25rem (36px)   | Open Sans 700        | Page heading      |
-| H2      | 1.75rem (28px)   | Open Sans 600        | Section heading   |
-| H3      | 1.375rem (22px)  | Open Sans 600        | Card / subsection |
-| Body    | 1.0625rem (17px) | Source Serif Pro 400 | Paragraph text    |
-| Lead    | 1.25rem (20px)   | Source Serif Pro 500 | Intro paragraph   |
-| Small   | 0.875rem (14px)  | Open Sans 400        | Labels, metadata  |
+| Token | Size | Family / weight | Use |
+| ----- | ---- | --------------- | --- |
+| Display | 3rem (48px) | DM Serif Display 400 | Hero / cover title |
+| H1 | 2.25rem (36px) | DM Serif Display 400 | Page heading |
+| H2 | 1.75rem (28px) | Plus Jakarta Sans 700 | Section heading |
+| H3 | 1.375rem (22px) | Plus Jakarta Sans 600 | Card / subsection |
+| Body | 1.0625rem (17px) | Lora 400 | Paragraph text |
+| Lead | 1.25rem (20px) | Lora 500 | Intro paragraph |
+| Small | 0.875rem (14px) | Plus Jakarta Sans 500 | Labels, metadata, captions |
 
-**Rules.** Never mix more than these two families. Do not use Open Sans weights below 600 for headings or above 400 weight tricks for fake bolding — load the real weights. Body copy never drops below 16px on screen.
+**Rules.** Never mix more than these three families (DM Serif Display, Plus Jakarta Sans, Lora) in a single layout — the Arabic families Amiri and Cairo are the only permitted additions. Do not fake bold DM Serif Display. Do not use Plus Jakarta Sans weights below 500 as body text — that role belongs to Lora. Body copy never drops below 16px on screen.
 
 ---
 
@@ -226,15 +247,15 @@ Two accessible, screen-legible families used by the university ecosystem, with l
 
 These are the canonical interface values every implementation must use. They are framework-neutral. Color hex codes and the type scale are defined in Section 3 — this subsection adds the non-color interface tokens.
 
-| Token                    | Value                            | Use                                         |
-| ------------------------ | -------------------------------- | ------------------------------------------- |
-| Corner radius (standard) | 12px (`rounded-xl`)              | Cards, buttons, inputs, images, modals      |
-| Corner radius (small)    | 6px                              | Chips, badges                               |
-| Transition duration      | 200ms                            | All interactive state changes               |
-| Transition easing        | `cubic-bezier(0.4, 0, 0.2, 1)`   | Standard ease                               |
-| Focus ring               | 3px, Hornbostel Teal (`#1F4C4C`) | Keyboard focus on every interactive element |
+| Token | Value | Use |
+| ----- | ----- | --- |
+| Corner radius (standard) | 12px (`rounded-xl`) | Cards, buttons, inputs, images, modals |
+| Corner radius (small) | 6px | Chips, badges |
+| Transition duration | 200ms | All interactive state changes |
+| Transition easing | `cubic-bezier(0.4, 0, 0.2, 1)` | Standard ease |
+| Focus ring | 3px, Hornbostel Teal (`#1F4C4C`) | Keyboard focus on every interactive element |
 
-Named typography tokens an implementation should expose: `heading` → Open Sans; `body` → Source Serif Pro; `arabic` → Amiri / Noto Naskh Arabic; `arabic-quran` → Amiri Quran; `arabic-heading` → Cairo / Noto Sans Arabic. Color tokens map to the palette in Section 3.
+Named typography tokens an implementation should expose: `display` → DM Serif Display; `heading` → Plus Jakarta Sans; `body` → Lora; `arabic` → Amiri / Noto Naskh Arabic; `arabic-quran` → Amiri Quran; `arabic-heading` → Cairo / Noto Sans Arabic. Color tokens map to the palette in Section 3, including the two new surface tokens: `midnight-teal` → `#0D2828`; `warm-cream` → `#FAF7F2`.
 
 > These tokens should be implemented directly in MSA websites' configuration/styling. This brand guide defines the values; any digital platform implementation should apply them.
 

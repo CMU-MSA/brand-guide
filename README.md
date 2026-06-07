@@ -81,7 +81,7 @@ python build/build_pdf.py
 
 On **macOS**, replace step 1 with `brew install pango gdk-pixbuf libffi cairo`.
 
-The brand fonts (Source Serif Pro, Amiri, Cairo) are pulled from Google Fonts at build time; Open Sans and the Arabic/emoji fallbacks come from the system font packages above.
+The brand fonts (DM Serif Display, Plus Jakarta Sans, Lora, Amiri, Cairo) are pulled from Google Fonts at build time; the Arabic/emoji fallbacks come from the system font packages above.
 
 ---
 
