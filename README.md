@@ -56,9 +56,9 @@ When you push a change that touches the brand guide, GitHub spins up a fresh tem
 
 **Cost:** free. GitHub Actions has no minute limit on public repositories; on a private repo this job uses ~1–2 minutes per run and the free plan includes far more than that per month. Either way this repo will not cost the MSA money.
 
-**Who makes that commit:** a bot. The auto-commit appears in the history as `github-actions[bot]` with the message `build: regenerate brand guide PDF [skip ci]`, touching only the PDF. It is clearly machine-generated, not attributed to a person.
+**Who makes that commit:** a bot. The auto-commit appears in the history as `github-actions[bot]` with the message `build: regenerate brand guide PDF`, touching only the PDF. It is clearly machine-generated, not attributed to a person.
 
-**Why it can't loop forever:** three guards. (1) The workflow only triggers on changes to the Markdown / build files, not the PDF. (2) The commit message contains `[skip ci]`. (3) Commits made with the built-in Actions token don't trigger new workflow runs by design.
+**Why it can't loop forever:** two guards. (1) The workflow only triggers on changes to the Markdown / build files, not the PDF. (2) Commits made with the built-in Actions token don't trigger new workflow runs by design.
 
 ---
 
