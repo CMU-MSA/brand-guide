@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local build scratch (the committed PDF at the repo root is intentional)
+/tmp_build/
+*.html.tmp
+
+# macOS
+.DS_Store

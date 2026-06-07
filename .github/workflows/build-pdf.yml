@@ -1,0 +1,64 @@
+name: Build guide PDF
+
+# Rebuild the PDF whenever the manual source, the build script, or the styles
+# change. The job commits the regenerated PDF back to the repo, so the link in
+# the README always points at the current version. (Commits that only touch the
+# PDF don't match the paths filter below, so this never loops.)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cmu-msa-brand-guide.md"
+      - "build/**"
+      - "requirements.txt"
+      - ".github/workflows/build-pdf.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-pdf-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install system libraries and fonts
+        run: |
+          sudo apt-get update -qq
+          # WeasyPrint runtime libs + brand-ish fonts + Arabic + color-emoji fallback
+          sudo apt-get install -y -qq \
+            libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf-2.0-0 libffi-dev \
+            libcairo2 fonts-open-sans fonts-noto-core fonts-noto-color-emoji
+        # Note: Source Serif Pro / Amiri / Cairo load from Google Fonts at build
+        # time via the @import in build/style.css. If you ever build offline,
+        # add those font packages here too.
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build the PDF
+        run: python build/build_pdf.py
+
+      - name: Upload PDF as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cmu-msa-brand-guide
+          path: cmu-msa-brand-guide.pdf
+
+      - name: Commit the regenerated PDF back to the repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "build: regenerate handbook PDF [skip ci]"
+          file_pattern: cmu-msa-brand-guide.pdf
