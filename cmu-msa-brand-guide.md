@@ -10,7 +10,7 @@
 
 > **Maintenance note.** Carnegie Mellon University has strict rules about how student clubs can use the CMU name and logos (see Section 2). Because the university updates these rules from time to time, the MSA board must check with the CMU SLICE office and the university brand team at the start of every school year to make sure this guide is still up to date with university policy.
 
-> **Scope.** This brand guide is **web-first** and also governs the organization's **digital and social presence** — website, social media, Open Graph share cards, and digital flyers. It does **not** yet cover physical print or merchandise production (CMYK/Pantone separations, garment specs, etc.). Those were intentionally deferred and will be added when the organization is ready; their absence is a scoping decision, not an oversight.
+> **Scope.** This brand guide is **web-first** and also governs the organization's **digital and social presence** — website, social media, Open Graph share cards, and digital flyers. A machine-readable token file (`tokens.json`) ships alongside this document at the root of the repository so that every implementation consumes the exact same values (see Section 6). The guide does **not** yet cover physical print or merchandise production (CMYK/Pantone separations, garment specs, etc.). Those were intentionally deferred and will be added when the organization is ready; their absence is a scoping decision, not an oversight.
 
 ---
 
@@ -237,6 +237,11 @@ Three expressive, screen-legible families chosen to give the MSA a distinct, war
 | Lead | 1.25rem (20px) | Lora 500 | Intro paragraph |
 | Small | 0.875rem (14px) | Plus Jakarta Sans 500 | Labels, metadata, captions |
 
+**Letter-spacing (tracking).** Locked values that give headlines the editorial polish seen in premium design systems:
+- **Display / H1:** `letter-spacing: -0.02em` — tightens the large serif to feel dense and confident.
+- **H2 / H3:** `letter-spacing: -0.01em` — subtle tightening for medium headings.
+- **Body:** `letter-spacing: 0` (default) — never adjust body tracking.
+
 **Rules.** Never mix more than these three families (DM Serif Display, Plus Jakarta Sans, Lora) in a single layout — the Arabic families Amiri and Cairo are the only permitted additions. Do not fake bold DM Serif Display. Do not use Plus Jakarta Sans weights below 500 as body text — that role belongs to Lora. Body copy never drops below 16px on screen.
 
 ---
@@ -246,6 +251,8 @@ Three expressive, screen-legible families chosen to give the MSA a distinct, war
 ### 4.1 Design Tokens (values)
 
 These are the canonical interface values every implementation must use. They are framework-neutral. Color hex codes and the type scale are defined in Section 3 — this subsection adds the non-color interface tokens.
+
+> **Machine-readable tokens.** All values in this section (and throughout Sections 3–4) are also published as `tokens.json` at the root of this repository — a single JSON file that any framework, platform, or build tool can consume directly. See **Section 6** for how to use these across platforms.
 
 | Token | Value | Use |
 | ----- | ----- | --- |
@@ -302,7 +309,7 @@ MSA digital platforms and websites are English-primary but **Arabic-forward in s
 ### 5.2 Typefaces
 
 - **Arabic body & sacred text → Amiri** (a Naskh face designed for exactly this). For **Quranic ayat specifically**, use the **Amiri Quran** cut, which is built for full vocalization.
-- **Arabic headings/display → Cairo** (or Noto Sans Arabic) to harmonize with the Open Sans Latin headings.
+- **Arabic headings/display → Cairo** (or Noto Sans Arabic) to harmonize with the Plus Jakarta Sans Latin headings.
 - **Decorative calligraphy** (Thuluth, Diwani, etc.) is produced or licensed as **artwork — SVG preferred, high-resolution raster acceptable — never set as a live webfont.** This avoids cross-device rendering failures. Every calligraphy image carries descriptive `alt` text (transliteration + meaning) and a visible caption.
 - Load the real Arabic font weights; never fake bold or simulate diacritics.
 - Typography tokens are defined in Section 4.1: `arabic`, `arabic-quran`, and `arabic-heading`.
@@ -339,6 +346,108 @@ MSA digital platforms and websites are English-primary but **Arabic-forward in s
 
 ---
 
-*This document is the single source of truth; where any flyer, page, or component disagrees with it, this brand guide governs and the artifact is corrected.*
+## Section 6 — Implementation Guide
 
+The brand guide is the human-readable reference. The token files are the machine-readable source of truth for values. Together they guarantee that an MSA website built in React, or a promotional site in plain HTML all look and feel identical.
+
+### 6.1 Token Architecture
+
+The implementation layer is formed by:
+
+- **`tokens.json`** — A single, structured JSON file at the root of the repository containing every design value (color, typography, spacing, radius, motion, elevation, focus, border). Any build system, design tool, or platform can parse this file to extract exact values.
+
+**The hierarchy of authority:**
+1. **Values** → `tokens.json` governs. If the JSON file and this document disagree on a hex code, size, or weight, the JSON wins.
+2. **Usage rules** → This document governs. The JSON says *what* the values are; this document says *when and how* to use them (e.g., "Gold is never body text").
+
+**Consuming tokens in a web project:**
+Web projects should compile `tokens.json` to their target format (e.g., CSS custom properties or Sass variables) during their build/dev step. For example, a compilation script can generate CSS variables under a `:root` selector namespaced with `--msa-` to prevent styling collisions.
+
+For Tailwind CSS, you can directly import `tokens.json` and map its values into `tailwind.config.js` `theme.extend`.
+
+### 6.2 Dark Mode
+
+Dark mode uses **neutral charcoal (`#1A1A1A`)** as the base surface — deliberately neutral rather than teal-tinted, to maximize contrast and feel modern on OLED displays.
+
+**Light ↔ Dark token mapping:**
+
+| Role | Light value | Dark value | Rationale |
+| --- | --- | --- | --- |
+| Surface (page background) | Warm Cream `#FAF7F2` | Charcoal `#1A1A1A` | Neutral dark |
+| Surface raised (cards, modals) | Pure White `#FFFFFF` | Raised Charcoal `#2A2A2A` | Slight lift |
+| Text primary | Ink `#1A1A1A` | Warm Cream `#FAF7F2` | 16.3:1 (AAA) |
+| Text secondary | Iron Gray `#6D6E71` | Muted `#A0A0A0` | 6.4:1 (AA) |
+| Accent (primary action) | Carnegie Red `#C41230` | Light Red `#E8485E` | 4.6:1 (AA) |
+| Accent (secondary/links) | Hornbostel Teal `#1F4C4C` | Light Teal `#3D9E9E` | 5.4:1 (AA) |
+| Accent (gold) | Gold Thread `#FDB515` | Gold Thread `#FDB515` | 9.9:1 |
+| Borders / dividers | Steel Gray `#E0E0E0` | Dark Border `#3A3A3A` | Subtle separation |
+
+**Implementation rules:**
+- **Web:** Web projects compiling the design tokens should include `@media (prefers-color-scheme: dark)` and `[data-theme="dark"]` overrides mapped to the `color-dark` tokens. Both should activate automatically.
+- **Respect the user's OS setting.** Never force light or dark mode without an explicit user toggle. If you provide a toggle, default to "System."
+
+### 6.3 Spacing Scale
+
+All padding, margin, gap, and positional values must come from the locked **4pt base grid**. This grid is fine-grained enough for precise control while maintaining visual rhythm.
+
+| Token | Value | Typical use |
+| --- | --- | --- |
+| `4xs` | 2px | Hairline gaps, inline icon offset |
+| `3xs` | 4px | Tight inline spacing, icon-to-label gap |
+| `2xs` | 6px | Compact list item padding, chip padding |
+| `xs` | 8px | Small component padding, tight card gaps |
+| `sm` | 12px | Standard component internal padding |
+| `md` | 16px | Default gap between elements, page gutter (mobile) |
+| `lg` | 24px | Card padding, page gutter (desktop), comfortable gaps |
+| `xl` | 32px | Section sub-padding, large component spacing |
+| `2xl` | 48px | Section padding (mobile) |
+| `3xl` | 64px | Section padding (desktop) |
+| `4xl` | 96px | Hero section vertical padding |
+
+**Rules:**
+- Every spacing value in any MSA implementation must be one of these 11 steps. No ad-hoc values (no `13px`, no `37px`).
+- When in doubt, round up to the next step rather than down — the brand favors generous whitespace.
+- Mobile layouts use one step smaller than their desktop equivalents for section padding (`2xl` instead of `3xl`).
+
+### 6.4 Digital Asset Specifications
+
+**Web favicon:** 32×32 PNG + 180×180 `apple-touch-icon`.
+
+**Open Graph / social share card:**
+- 1200×630 PNG.
+- Midnight Teal background with the logo and the page title set in DM Serif Display, Warm Cream color.
+
+### 6.5 Accessibility
+
+The brand's accessibility requirements (Section 3.2 contrast, Section 4.2 focus) must be met on the web:
+
+| Requirement | Web |
+| --- | --- |
+| Reduced motion | `@media (prefers-reduced-motion)` |
+| Font scaling | `rem`-based sizes |
+| Focus visibility | `:focus-visible` ring |
+| Color contrast | Tested per Section 3.2 |
+| Screen reader labels | `aria-label`, `alt` |
+| RTL Arabic | `dir="rtl"` + `lang="ar"` |
+
+### 6.6 Compliance Checklist
+
+Every MSA digital product — website, app, or tool — must pass this checklist before release. The board may designate a reviewer, but any contributor can run the check.
+
+- [ ] **Token sourcing.** All color, spacing, radius, and motion values come from `tokens.json` — no hardcoded hex values, no ad-hoc spacing.
+- [ ] **Font rendering.** All three Latin families (DM Serif Display, Plus Jakarta Sans, Lora) load and render correctly. Arabic text uses Amiri (body) or Cairo (headings).
+- [ ] **Color contrast.** Every text element passes WCAG AA (4.5:1 normal, 3:1 large) per the matrix in Section 3.2.
+- [ ] **Dark mode.** If the platform supports dark mode, the implementation uses the dark token set from Section 6.2. Light/dark follow the user's OS setting by default.
+- [ ] **Spacing grid.** All spacing values are from the locked 4pt scale in Section 6.3.
+- [ ] **Corner radii.** Interactive containers use 12px (standard) or 6px (small). No sharp corners on interactive elements; no oversized radii.
+- [ ] **Arabic rendering.** Arabic text renders RTL with correct diacritics, uses `lang="ar"` (or platform equivalent), and calligraphy images carry alt text.
+- [ ] **Focus states.** Every interactive element has a visible focus indicator (keyboard/VoiceOver/TalkBack). Focus is never removed without a visible replacement.
+- [ ] **Reduced motion.** Non-essential animations are disabled when the user's OS requests reduced motion.
+- [ ] **Font scaling.** Text scales with the user's accessibility font-size preference (rem on web). No fixed sizes that ignore scaling.
+- [ ] **Footer disclaimer.** Web surfaces include: *"The CMU Muslim Student Association is a registered student organization at Carnegie Mellon University. Views expressed are those of the organization and not of the university."*
+- [ ] **Naming compliance.** All references to the organization follow Section 2.1.
+
+---
+
+*This document is the single source of truth for usage rules; `tokens.json` is the single source of truth for values. Where any flyer, page, app, or component disagrees with them, these sources govern and the artifact is corrected.*
 
