@@ -52,6 +52,21 @@ The `tokens/` directory contains the machine-readable layer of the brand guide �
 - **`tokens/tokens.json`** contains every design value (colors, fonts, spacing, radii, motion, dark mode) as structured JSON. Any build tool, design plugin (e.g., Figma Tokens Studio), or platform-specific constants file can consume it directly.
 - **`tokens/tokens.schema.json`** defines the exact structure and validation rules for the token data. Modern code editors read this schema automatically to provide live linting, error validation, and auto-complete inside `tokens.json`.
 
+#### Consuming tokens in a downstream project (e.g. the MSA website)
+
+Because this repo is public, `tokens/tokens.json` is available at a permanent raw URL. The recommended pattern is to fetch it at build time — no package manager, no auth, no extra accounts needed.
+
+Add this `prebuild` script to the website's `package.json`:
+
+```json
+"scripts": {
+  "prebuild": "curl -s https://raw.githubusercontent.com/CMU-MSA/brand-guide/main/tokens/tokens.json -o src/tokens.json",
+  "build": "..."
+}
+```
+
+`npm run build` (and most CI pipelines) will automatically run `prebuild` first, pulling the latest tokens before every build. The local `src/tokens.json` copy is what the website imports — you can add it to `.gitignore` since it's always regenerated.
+
 Downstream web projects can compile these tokens to CSS custom properties or configuration variables during their build step. For example, a simple Node.js script can convert the JSON to CSS custom properties:
 
 ```javascript
