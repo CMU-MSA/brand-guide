@@ -2,7 +2,7 @@
    Brand fonts load from Google Fonts at build time; system Noto fonts are the
    fallback so the build still succeeds offline (Arabic + emoji always render). */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@500;600;700&family=Lora:wght@400;500&family=Amiri:wght@400;700&family=Cairo:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400&family=Plus+Jakarta+Sans:wght@500;600;700&family=Lora:wght@400;500&family=Amiri:wght@400;700&family=Cairo:wght@600;700&display=swap');
 
 :root {
   /* --- Core palette --- */
@@ -59,7 +59,7 @@ a { color: var(--msa-teal); text-decoration: none; word-break: break-word; }
 
 /* ---- Headings ---- */
 h1 {
-  font-family: "DM Serif Display", Georgia, serif;
+  font-family: "Spectral", Georgia, serif;
   line-height: 1.1;
   page-break-after: avoid;
 }
@@ -69,7 +69,7 @@ h2, h3, h4 {
   page-break-after: avoid;
 }
 /* The document title (first H1) acts as a cover line */
-/* DM Serif Display is a Regular-only face; weight is set by the typeface itself */
+/* Spectral display weight — 400 regular for hero/H1 */
 h1 {
   font-size: 26pt;
   font-weight: 400;

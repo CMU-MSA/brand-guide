@@ -203,11 +203,11 @@ All combinations were computed against the WCAG 2.1 relative-luminance formula. 
 
 Three expressive, screen-legible families chosen to give the MSA a distinct, warm typographic identity while remaining fully compatible with the Arabic families already in use.
 
-**Display / Hero — DM Serif Display.**
-- Humanist serif with editorial warmth. Used exclusively for the largest type: hero titles, page H1s, and cover-line treatments.
-- This is a Regular-weight-only face — its optical weight at large sizes is equivalent to a bold sans. **Do not attempt to load or fake a bold variant.**
-- Web fallback stack: `'DM Serif Display', Georgia, 'Times New Roman', serif`.
-- Arabic complement: DM Serif Display pairs naturally with Amiri at large sizes — both are Naskh-influenced serifs. No special accommodation needed.
+**Display / Hero — Spectral.**
+- Screen-optimized editorial serif with a scholarly, archival character — designed by Production Type for high-legibility display use. Used exclusively for the largest type: hero titles, page H1s, and cover-line treatments.
+- Allowed weights: **Regular 400** for hero/H1. Spectral's high stroke contrast at large sizes provides sufficient visual weight without a bold variant.
+- Web fallback stack: `'Spectral', Georgia, 'Times New Roman', serif`.
+- Arabic complement: Spectral's refined stroke contrast and editorial proportions sit naturally alongside Amiri at large sizes. No special accommodation needed.
 
 **Subheadings / UI — Plus Jakarta Sans.**
 - Modern geometric sans with subtle humanist details that distinguish it from generic system sans fonts. Used for H2, H3, navigation, buttons, labels, and all UI chrome.
@@ -229,8 +229,8 @@ Three expressive, screen-legible families chosen to give the MSA a distinct, war
 
 | Token | Size | Family / weight | Use |
 | ----- | ---- | --------------- | --- |
-| Display | 3rem (48px) | DM Serif Display 400 | Hero / cover title |
-| H1 | 2.25rem (36px) | DM Serif Display 400 | Page heading |
+| Display | 3rem (48px) | Spectral 400 | Hero / cover title |
+| H1 | 2.25rem (36px) | Spectral 400 | Page heading |
 | H2 | 1.75rem (28px) | Plus Jakarta Sans 700 | Section heading |
 | H3 | 1.375rem (22px) | Plus Jakarta Sans 600 | Card / subsection |
 | Body | 1.0625rem (17px) | Lora 400 | Paragraph text |
@@ -242,7 +242,7 @@ Three expressive, screen-legible families chosen to give the MSA a distinct, war
 - **H2 / H3:** `letter-spacing: -0.01em` — subtle tightening for medium headings.
 - **Body:** `letter-spacing: 0` (default) — never adjust body tracking.
 
-**Rules.** Never mix more than these three families (DM Serif Display, Plus Jakarta Sans, Lora) in a single layout — the Arabic families Amiri and Cairo are the only permitted additions. Do not fake bold DM Serif Display. Do not use Plus Jakarta Sans weights below 500 as body text — that role belongs to Lora. Body copy never drops below 16px on screen.
+**Rules.** Never mix more than these three families (Spectral, Plus Jakarta Sans, Lora) in a single layout — the Arabic families Amiri and Cairo are the only permitted additions. Do not use Spectral below display/H1 sizes. Do not use Plus Jakarta Sans weights below 500 as body text — that role belongs to Lora. Body copy never drops below 16px on screen.
 
 ---
 
@@ -262,7 +262,7 @@ These are the canonical interface values every implementation must use. They are
 | Transition easing | `cubic-bezier(0.4, 0, 0.2, 1)` | Standard ease |
 | Focus ring | 3px, Hornbostel Teal (`#1F4C4C`) | Keyboard focus on every interactive element |
 
-Named typography tokens an implementation should expose: `display` → DM Serif Display; `heading` → Plus Jakarta Sans; `body` → Lora; `arabic` → Amiri / Noto Naskh Arabic; `arabic-quran` → Amiri Quran; `arabic-heading` → Cairo / Noto Sans Arabic. Color tokens map to the palette in Section 3, including the two new surface tokens: `midnight-teal` → `#0D2828`; `warm-cream` → `#FAF7F2`.
+Named typography tokens an implementation should expose: `display` → Spectral; `heading` → Plus Jakarta Sans; `body` → Lora; `arabic` → Amiri / Noto Naskh Arabic; `arabic-quran` → Amiri Quran; `arabic-heading` → Cairo / Noto Sans Arabic. Color tokens map to the palette in Section 3, including the two new surface tokens: `midnight-teal` → `#0D2828`; `warm-cream` → `#FAF7F2`.
 
 > These tokens should be implemented directly in MSA websites' configuration/styling. This brand guide defines the values; any digital platform implementation should apply them.
 
@@ -415,7 +415,7 @@ All padding, margin, gap, and positional values must come from the locked **4pt 
 
 **Open Graph / social share card:**
 - 1200×630 PNG.
-- Midnight Teal background with the logo and the page title set in DM Serif Display, Warm Cream color.
+- Midnight Teal background with the logo and the page title set in Spectral, Warm Cream color.
 
 ### 6.5 Accessibility
 
@@ -435,7 +435,7 @@ The brand's accessibility requirements (Section 3.2 contrast, Section 4.2 focus)
 Every MSA digital product — website, app, or tool — must pass this checklist before release. The board may designate a reviewer, but any contributor can run the check.
 
 - [ ] **Token sourcing.** All color, spacing, radius, and motion values come from `tokens/tokens.json` — no hardcoded hex values, no ad-hoc spacing.
-- [ ] **Font rendering.** All three Latin families (DM Serif Display, Plus Jakarta Sans, Lora) load and render correctly. Arabic text uses Amiri (body) or Cairo (headings).
+- [ ] **Font rendering.** All three Latin families (Spectral, Plus Jakarta Sans, Lora) load and render correctly. Arabic text uses Amiri (body) or Cairo (headings).
 - [ ] **Color contrast.** Every text element passes WCAG AA (4.5:1 normal, 3:1 large) per the matrix in Section 3.2.
 - [ ] **Dark mode.** If the platform supports dark mode, the implementation uses the dark token set from Section 6.2. Light/dark follow the user's OS setting by default.
 - [ ] **Spacing grid.** All spacing values are from the locked 4pt scale in Section 6.3.
